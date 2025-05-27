@@ -5,11 +5,13 @@ import { AuthRequest } from '../middlewares/auth.middleware';
 
 export const createProperty = async (req: AuthRequest, res: Response, next:NextFunction): Promise<void> => {
   try {
+    
     if (!req.user) {
       res.status(401).json({ message: 'Not authorized' });
       return;
     }
     const { _id: userId } = req.user;
+   
     if (!userId) {
       res.status(404).json({ message: "User not found" });
       return;
@@ -427,7 +429,7 @@ export const searchProperties = async (req: Request, res: Response, next:NextFun
       filter.availableFrom = new Date(availableFrom as string);
     }
 
-    const properties = await Property.find(filter);
+    const properties = await Property.find(filter).sort({ createdAt: -1 });
 
     res.status(200).json({
       success: true,

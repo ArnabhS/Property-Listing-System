@@ -11,7 +11,7 @@ import { protect } from '../middlewares/auth.middleware';
 const router = Router();
 
 
-router.post('/', protect, createProperty);
+router.post('/create', protect, createProperty);
 router.put('/update/:id', protect, updateProperty);
 router.delete('/:id', protect, deleteProperty);
 router.get('/search', cacheMiddleware(3600), searchProperties);
