@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import bcrypt from 'bcryptjs';
-import { User } from '../models/user.model';
+import User from '../models/user.model';
 import { generateToken } from '../utils/generateAccessToken';
 import { asyncHandler } from '../utils/asyncHandler';
 
@@ -24,9 +24,9 @@ export const registerUser = asyncHandler(async (req: Request, res: Response) => 
         const user = new User({ email, password: hashedPassword });
         await user.save();
         
-        return res.status(201).json({ message: 'User registered successfully' });
+        return res.status(201).json({ success:true, message: 'User registered successfully' });
     } catch (error) {
-        return res.status(501).json({ message: "Internal server error" });
+        return res.status(501).json({ success:false, message: "Internal server error" });
     }
 });
 
@@ -51,8 +51,8 @@ export const loginUser = asyncHandler (async(req:Request, res:Response) =>{
         const token = generateToken(user._id as string, user.email as string);
         const userWithoutPassword = await User.findOne({ email }).select('-password');
 
-        return res.status(200).json({ user: userWithoutPassword, token });
+        return res.status(200).json({ success:true, user: userWithoutPassword, token });
     } catch (error) {
-        return res.status(501).json({message:"Internal server error"})
+        return res.status(501).json({success:false, message:"Internal server error"})
     }
 });

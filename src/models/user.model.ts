@@ -9,4 +9,4 @@ const userSchema: Schema = new Schema<IUser>({
   recommendationsReceived: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Property' }]
 }, { timestamps: true });
 
-export const User = mongoose.model('User', userSchema);
+export default mongoose.model<IUser & Document>('User', userSchema);
