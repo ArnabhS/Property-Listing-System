@@ -1,21 +1,24 @@
-import { Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import bcrypt from 'bcryptjs';
 import User from '../models/user.model';
 import { generateToken } from '../utils/generateAccessToken';
-import { asyncHandler } from '../utils/asyncHandler';
 
-export const registerUser = asyncHandler(async (req: Request, res: Response) => {
+
+
+export const registerUser = async (req: Request, res: Response,next:NextFunction): Promise<void> => {
     try {    
         const { email, password } = req.body;
         
         if (!email || !password) {
-            return res.status(400).json({ message: "Please fill in all fields" });
+            res.status(400).json({ message: "Please fill in all fields" });
+            return;
         }
 
         const userExists = await User.findOne({ email });
         
         if (userExists) {
-            return res.status(401).json({ message: "User already registered" });
+            res.status(401).json({ message: "User already registered" });
+            return;
         }
 
         const salt = await bcrypt.genSalt(10);
@@ -24,35 +27,44 @@ export const registerUser = asyncHandler(async (req: Request, res: Response) => 
         const user = new User({ email, password: hashedPassword });
         await user.save();
         
-        return res.status(201).json({ success:true, message: 'User registered successfully' });
+        res.status(201).json({ success:true, message: 'User registered successfully' });
+        return;
     } catch (error) {
-        return res.status(501).json({ success:false, message: "Internal server error" });
+        res.status(501).json({ success:false, message: "Internal server error" });
+        next(error);
+        return;
     }
-});
+}
 
-export const loginUser = asyncHandler (async(req:Request, res:Response) =>{
+export const loginUser = async(req:Request, res:Response,next:NextFunction):Promise<void> =>{
     
     try {
         const { email, password } = req.body;
         if(!email || !password){
-            return res.status(400).json({message:"Email or Password is required"});
+            res.status(400).json({message:"Email or Password is required"});
+            return;
         }
         const user = await User.findOne({ email });
         if (!user){
-        return res.status(404).json({ message: 'User not found' });
+            res.status(404).json({ message: 'User not found' });
+            return;
         }
 
         const isPasswordValid = await bcrypt.compare(password, user.password as string);
 
         if (!isPasswordValid) {
-        return res.status(401).json({ message: 'Invalid password' });
+            res.status(401).json({ message: 'Invalid password' });
+            return;
         }
 
         const token = generateToken(user._id as string, user.email as string);
         const userWithoutPassword = await User.findOne({ email }).select('-password');
 
-        return res.status(200).json({ success:true, user: userWithoutPassword, token });
+        res.status(200).json({ success:true, user: userWithoutPassword, token });
+        return;
     } catch (error) {
-        return res.status(501).json({success:false, message:"Internal server error"})
+        res.status(501).json({success:false, message:"Internal server error"})
+        next(error);
+        return;
     }
-});
+}

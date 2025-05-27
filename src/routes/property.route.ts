@@ -5,15 +5,15 @@ import {
   deleteProperty,
   searchProperties
 } from '../controllers/property.controller';
+import { cacheMiddleware } from '../middlewares/cache.middleware';
+import { protect } from '../middlewares/auth.middleware';
 
 const router = Router();
 
-// Property CRUD routes
-router.post('/', createProperty);
 
-// Favorites routes
-router.put('/update/:id', updateProperty);
-router.delete('/:id', deleteProperty);
-router.get('/search', searchProperties);
+router.post('/', protect, createProperty);
+router.put('/update/:id', protect, updateProperty);
+router.delete('/:id', protect, deleteProperty);
+router.get('/search', cacheMiddleware(3600), searchProperties);
 
 export default router; 

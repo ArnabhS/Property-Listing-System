@@ -5,8 +5,9 @@ import dotenv from 'dotenv';
 
 import { connectDB } from './config/db';
 import authRoutes from "./routes/auth.route"
-
-
+import propertyRoutes from "./routes/property.route"
+import recommendedRoutes from "./routes/recommended.route"
+import favouriteRoutes from "./routes/favourite.route"
 
 dotenv.config();
 const app = express();
@@ -18,7 +19,9 @@ app.use(express.json());
 
 
 app.use('/api/auth', authRoutes);
-
+app.use('/api/property', propertyRoutes);
+app.use('/api/recommended', recommendedRoutes);
+app.use('/api/favourite', favouriteRoutes);
 
 app.get('/', (_req, res) => {
   res.send('Server is running...');

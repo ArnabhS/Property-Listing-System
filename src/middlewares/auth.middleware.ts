@@ -1,20 +1,23 @@
-
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
-import { User } from '../models/user.model';
+import User from '../models/user.model';
 import dotenv from 'dotenv';
 
 dotenv.config();
 
 interface JwtPayload {
   id: string;
+  email: string;
 }
 
 export interface AuthRequest extends Request {
-  user?: any;
+  user?: {
+    _id: string;
+    email: string;
+  };
 }
 
-export const protect = async (req: AuthRequest, res: Response, next: NextFunction) => {
+export const protect = async (req: AuthRequest, res: Response, next: NextFunction): Promise<void> => {
   let token;
 
   if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
@@ -22,14 +25,19 @@ export const protect = async (req: AuthRequest, res: Response, next: NextFunctio
       token = req.headers.authorization.split(' ')[1];
       const decoded = jwt.verify(token, process.env.JWT_SECRET!) as JwtPayload;
 
-      req.user = await User.findById(decoded.id).select('-password');
-      if (!req.user) return res.status(401).json({ message: 'User not found' });
-
+      const user = await User.findById(decoded.id).select('-password');
+      if (!user) {
+        res.status(401).json({ message: 'User not found' });
+        return;
+      }
+      req.user = user;
       next();
     } catch (error) {
-      return res.status(401).json({ message: 'Invalid token' });
+      res.status(401).json({ message: 'Invalid token' });
+      return;
     }
   } else {
-    return res.status(401).json({ message: 'Not authorized, token missing' });
+    res.status(401).json({ message: 'Not authorized, token missing' });
+    return;
   }
 };
