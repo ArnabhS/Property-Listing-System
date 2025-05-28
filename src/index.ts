@@ -8,6 +8,7 @@ import authRoutes from "./routes/auth.route"
 import propertyRoutes from "./routes/property.route"
 import recommendedRoutes from "./routes/recommended.route"
 import favouriteRoutes from "./routes/favourite.route"
+import uploadRoutes from "./routes/upload.route"
 
 dotenv.config();
 const app = express();
@@ -22,6 +23,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/property', propertyRoutes);
 app.use('/api/recommended', recommendedRoutes);
 app.use('/api/favourite', favouriteRoutes);
+app.use('/api/upload', uploadRoutes);
 
 app.get('/', (_req, res) => {
   res.send('Server is running...');
