@@ -9,9 +9,11 @@ export const addToFavorites = async (req: AuthRequest, res: Response, next: Next
         res.status(401).json({ message: 'Not authorized' });
         return;
       }
+      // get user id from middleware
       const { _id: userId } = req.user;
       const { propertyId } = req.body;
-  
+
+      // check if all fields are filled
       if (!userId || !propertyId) {
         res.status(400).json({
           success: false,
@@ -74,9 +76,11 @@ export const addToFavorites = async (req: AuthRequest, res: Response, next: Next
         res.status(401).json({ message: 'Not authorized' });
         return;
       }
+      // get user id from middleware
       const { _id: userId } = req.user;
       const { propertyId } = req.body;
-  
+
+      // check if all fields are filled
       if (!userId || !propertyId) {
         res.status(400).json({
           success: false,
@@ -130,8 +134,10 @@ export const addToFavorites = async (req: AuthRequest, res: Response, next: Next
         res.status(401).json({ message: 'Not authorized' });
         return;
       }
+      // get user id from middleware
       const { _id: userId } = req.user;
-  
+
+      // check if all fields are filled
       if (!userId) {
         res.status(400).json({
           success: false,
