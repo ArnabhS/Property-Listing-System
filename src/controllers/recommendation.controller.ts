@@ -71,6 +71,7 @@ export const recommendProperty = async (req: Request, res: Response,next:NextFun
         property: property.title
       }
     });
+    return;
   } catch (error) {
     res.status(501).json({
       success: false,
@@ -85,7 +86,7 @@ export const getRecommendations =async (req: AuthRequest, res: Response,next:Nex
   try {
    
     const { userId } = req.params;
-    console.log(userId);
+    
     if (!userId) {
       res.status(400).json({
         success: false,
@@ -100,7 +101,7 @@ export const getRecommendations =async (req: AuthRequest, res: Response,next:Nex
         path: 'recommendationsReceived',
         populate: {
           path: 'createdBy',
-          select: 'name email'
+          select: 'email'
         }
       });
 

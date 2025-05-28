@@ -11,7 +11,7 @@ export const cacheMiddleware = (duration: number) => {
 
     try {
       const cachedResponse = await redis.get(key);
-      console.log("cachedResponse",cachedResponse);
+      
       if (cachedResponse) {
         res.json(JSON.parse(cachedResponse));
         return;
