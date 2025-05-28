@@ -12,6 +12,6 @@ const router = Router();
 
 router.post('/', protect, recommendProperty);
 router.post('/remove', protect, removeRecommendation);
-router.get('/', protect, cacheMiddleware(3600), getRecommendations);
+router.get('/:userId', protect, cacheMiddleware(3600), getRecommendations);
 
 export default router; 

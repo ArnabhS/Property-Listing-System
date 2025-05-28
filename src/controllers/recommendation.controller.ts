@@ -83,12 +83,9 @@ export const recommendProperty = async (req: Request, res: Response,next:NextFun
 
 export const getRecommendations =async (req: AuthRequest, res: Response,next:NextFunction) : Promise<void> => {
   try {
-    if (!req.user) {
-      res.status(401).json({ message: 'Not authorized' });
-      return;
-    }
-    const { _id: userId } = req.user;
-
+   
+    const { userId } = req.params;
+    console.log(userId);
     if (!userId) {
       res.status(400).json({
         success: false,
