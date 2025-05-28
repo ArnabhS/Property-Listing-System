@@ -1,7 +1,6 @@
-
 import fs from 'fs';
 import csv from 'csv-parser';
-import Property from '../models/property.model';
+import Property from '../models/property.model.js';
 
 
 export const importCSV = async (filePath: string, userId: string): Promise<string> => {

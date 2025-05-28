@@ -3,9 +3,9 @@ import {
   recommendProperty,
   getRecommendations,
   removeRecommendation
-} from '../controllers/recommendation.controller';
-import { cacheMiddleware } from '../middlewares/cache.middleware';
-import { protect } from '../middlewares/auth.middleware';
+} from '../controllers/recommendation.controller.js';
+import { cacheMiddleware } from '../middlewares/cache.middleware.js';
+import { protect } from '../middlewares/auth.middleware.js';
 
 const router = Router();
 

@@ -1,7 +1,7 @@
 import { NextFunction, Response } from "express";
-import { AuthRequest } from "../middlewares/auth.middleware";
-import Property from '../models/property.model'
-import User from '../models/user.model'
+import { AuthRequest } from "../middlewares/auth.middleware.js";
+import Property from '../models/property.model.js'
+import User from '../models/user.model.js'
 
 export const addToFavorites = async (req: AuthRequest, res: Response, next: NextFunction): Promise<void> => {
     try {
@@ -109,7 +109,7 @@ export const addToFavorites = async (req: AuthRequest, res: Response, next: Next
       }
   
       // Remove property from favorites
-      user.favorites = user.favorites.filter(id => id.toString() !== propertyId);
+      user.favorites = user.favorites.filter((id: string) => id.toString() !== propertyId);
       await user.save();
   
       res.status(200).json({

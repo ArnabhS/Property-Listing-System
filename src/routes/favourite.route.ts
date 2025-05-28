@@ -3,9 +3,9 @@ import {
   addToFavorites,
   removeFromFavorites,
   getFavorites
-} from '../controllers/favourite.controller';
-import { cacheMiddleware } from '../middlewares/cache.middleware';
-import { protect } from '../middlewares/auth.middleware';
+} from '../controllers/favourite.controller.js';
+import { cacheMiddleware } from '../middlewares/cache.middleware.js';
+import { protect } from '../middlewares/auth.middleware.js';
 
 const router = Router();
 

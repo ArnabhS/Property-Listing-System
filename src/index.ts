@@ -1,14 +1,13 @@
-
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 
-import { connectDB } from './config/db';
-import authRoutes from "./routes/auth.route"
-import propertyRoutes from "./routes/property.route"
-import recommendedRoutes from "./routes/recommended.route"
-import favouriteRoutes from "./routes/favourite.route"
-import uploadRoutes from "./routes/upload.route"
+import { connectDB } from './config/db.js';
+import authRoutes from "./routes/auth.route.js"
+import propertyRoutes from "./routes/property.route.js"
+import recommendedRoutes from "./routes/recommended.route.js"
+import favouriteRoutes from "./routes/favourite.route.js"
+import uploadRoutes from "./routes/upload.route.js"
 
 dotenv.config();
 const app = express();

@@ -1,5 +1,5 @@
 import mongoose, { Schema, Document } from 'mongoose';
-import { IProperty } from '../types/index';
+import { IProperty } from '../types/index.js';
 
 const propertySchema: Schema = new Schema<IProperty>({
     id: { 

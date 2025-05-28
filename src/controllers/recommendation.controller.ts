@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
-import User from '../models/user.model';
-import Property from '../models/property.model';
-import { AuthRequest } from '../middlewares/auth.middleware';
+import User from '../models/user.model.js';
+import Property from '../models/property.model.js';
+import { AuthRequest } from '../middlewares/auth.middleware.js';
 
 
 export const recommendProperty = async (req: Request, res: Response,next:NextFunction) : Promise<void> => {
@@ -167,7 +167,7 @@ export const removeRecommendation = async (req: AuthRequest, res: Response,next:
 
     // Remove property from recommendations
     user.recommendationsReceived = user.recommendationsReceived.filter(
-      id => id.toString() !== propertyId
+      (id: string) => id.toString() !== propertyId
     );
     await user.save();
 

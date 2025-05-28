@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import bcrypt from 'bcryptjs';
-import User from '../models/user.model';
-import { generateToken } from '../utils/generateAccessToken';
+import User from '../models/user.model.js';
+import { generateToken } from '../utils/generateAccessToken.js';
 
 
 

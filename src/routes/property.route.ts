@@ -4,9 +4,9 @@ import {
   updateProperty,
   deleteProperty,
   searchProperties
-} from '../controllers/property.controller';
-import { cacheMiddleware } from '../middlewares/cache.middleware';
-import { protect } from '../middlewares/auth.middleware';
+} from '../controllers/property.controller.js';
+import { cacheMiddleware } from '../middlewares/cache.middleware.js';
+import { protect } from '../middlewares/auth.middleware.js';
 
 const router = Router();
 

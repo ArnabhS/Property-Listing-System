@@ -1,6 +1,6 @@
 import { NextFunction, Response } from 'express';
-import { importCSV } from '../utils/importCSV';
-import { AuthRequest } from '../middlewares/auth.middleware';
+import { importCSV } from '../utils/importCSV.js';
+import { AuthRequest } from '../middlewares/auth.middleware.js';
 
 export const importProperties = async (req: AuthRequest, res: Response, next: NextFunction) : Promise<void> => {
   try {
