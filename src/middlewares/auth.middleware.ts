@@ -15,8 +15,6 @@ export interface AuthRequest extends Request {
     _id: string;
     email: string;
   };
-  body: any;
-  params: any;
 }
 
 export const protect = async (req: AuthRequest, res: Response, next: NextFunction): Promise<void> => {
